@@ -13,16 +13,16 @@ int main(int argc, const char * argv[]) {
         
         // 判断参数是否够
         if (argc == 1) {
-            printf("参数错误, 请传入正确的路径\n");
+            NSLog(@"参数错误, 请传入正确的路径");
             return 0;
         }
         
         NSString *filePath = [NSString stringWithUTF8String:argv[1]];
-        printf("工程路径: %s\n", filePath.UTF8String);
+        NSLog(@"工程路径: %s", filePath.UTF8String);
         
         // 判断该路径是否存在
         if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
-            printf("路径无效, 请传入一个有效的路径\n");
+            NSLog(@"路径无效, 请传入一个有效的路径");
             return 0;
         }
         
