@@ -8,21 +8,25 @@
 
 #import <Foundation/Foundation.h>
 
+void printFormat(NSString *str) {
+    printf("%s\n", str.UTF8String);
+}
+
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         
         // 判断参数是否够
         if (argc == 1) {
-            NSLog(@"参数错误, 请传入正确的路径");
+            printFormat(@"参数错误, 请传入正确的路径");
             return 0;
         }
         
         NSString *filePath = [NSString stringWithUTF8String:argv[1]];
-        NSLog(@"工程路径: %s", filePath.UTF8String);
+        printFormat([NSString stringWithFormat:@"工程路径: %@", filePath]);
         
         // 判断该路径是否存在
         if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
-            NSLog(@"路径无效, 请传入一个有效的路径");
+            printFormat(@"路径无效, 请传入一个有效的路径");
             return 0;
         }
         
@@ -41,12 +45,13 @@ int main(int argc, const char * argv[]) {
                 [[NSFileManager defaultManager] fileExistsAtPath:fullPath isDirectory:&isDir];
                 
                 if (!isDir) {
-                
-                    NSLog(@"正在处理%@...", fullPath);
+                    
                     NSString *extension = [fullPath pathExtension];
                     if ([extension isEqualToString:@"h"]
                         || [extension isEqualToString:@"m"]
                         || [extension isEqualToString:@"mm"]) {
+                        
+                        printFormat([NSString stringWithFormat:@"正在处理%@...", fullPath]);
                         
                         NSString *content = [[NSString alloc] initWithContentsOfFile:fullPath encoding:NSUTF8StringEncoding error:nil];
                         
@@ -76,8 +81,7 @@ int main(int argc, const char * argv[]) {
                 }
             }
         }
-        
-        NSLog(@"替换完成!");
+        printFormat(@"替换完成!");
     }
     return 0;
 }
